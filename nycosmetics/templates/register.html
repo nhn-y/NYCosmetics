@@ -1,76 +1,211 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>{%block title%}Đăng Ký{%endblock%}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    <title>
+        {% block title %} ĐĂNG KÝ {% endblock %}
+    </title>
+    <link
+            crossorigin="anonymous"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            rel="stylesheet"
+    >
+    <script
+            crossorigin="anonymous"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}?v=1.2">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ĐĂNG KÝ</title>
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+    <link
+            href="{{ url_for('static', filename='css/register.css') }}?v=1.2"
+            rel="stylesheet"
+    >
+
+    <meta
+            content="width=device-width, initial-scale=1.0"
+            name="viewport"
+    >
 </head>
 
-{%block content%}
-
+{% block content %}
 <div class="row justify-content-center mt-5">
     <div class="col-md-5">
-        <h3 style="color:#A56EFF;" class="text-center mb-4">ĐĂNG KÝ</h3>
+        <h3
+                class="text-center mb-4"
+                style="color:#13c54a;"
+        >
+            ĐĂNG KÝ
+        </h3>
 
         {% if err_msg %}
-        <div class="alert alert-danger">{{err_msg}}</div>
+        <div class="alert alert-danger">
+            {{ err_msg }}
+        </div>
         {% endif %}
 
-        <form method="post" action="/register" enctype="multipart/form-data">
+        <form
+                action="/register"
+                enctype="multipart/form-data"
+                method="post"
+        >
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="name" placeholder="Nhập họ tên" name="name" required>
-                <label for="name">Nhập họ tên</label>
+                <input
+                        class="form-control"
+                        id="name"
+                        name="name"
+                        placeholder="Nhập họ tên"
+                        required
+                        type="text"
+                >
+                <label for="name"> Nhập họ tên </label>
             </div>
 
             <div class="form-floating mb-3">
-                <input type="text" class="form-control"
-                       id="username"
-                       placeholder="Nhập tên tài khoản"
-                       name="username"
-                       pattern="^[A-Za-z0-9]+$"
-                       title="Chỉ được nhập chữ và số, không khoảng trắng, không ký tự đặc biệt."
-                       required>
-                <label for="username">Nhập tên tài khoản</label>
+                <input
+                        class="form-control"
+                        id="username"
+                        name="username"
+                        pattern="^[A-Za-z0-9]+$"
+                        placeholder="Nhập tên tài khoản"
+                        required
+                        title="Chỉ được nhập chữ và số, không khoảng trắng, không ký tự đặc biệt."
+                        type="text"
+                >
+                <label for="username"> Nhập tên tài khoản </label>
             </div>
 
             <div class="form-floating mb-3">
-                <input type="password" class="form-control"
-                       id="password"
-                       placeholder="Nhập mật khẩu"
-                       name="password"
-                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-                       title="Mật khẩu phải có ít nhất 8 ký tự. Gồm chữ hoa, chữ thường, số, ký tự đặc biệt."
-                       required>
-                <label for="password">Nhập mật khẩu</label>
+                <input
+                        class="form-control"
+                        id="password"
+                        name="password"
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                        placeholder="Nhập mật khẩu"
+                        required
+                        title="Mật khẩu phải có ít nhất 8 ký tự. Gồm chữ hoa, chữ thường, số, ký tự đặc biệt."
+                        type="password"
+                >
+                <label for="password"> Nhập mật khẩu </label>
             </div>
 
             <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="confirm" placeholder="Nhập lại mật khẩu" name="confirm" required>
-                <label for="confirm">Nhập lại mật khẩu</label>
+                <input
+                        class="form-control"
+                        id="confirm"
+                        name="confirm"
+                        placeholder="Nhập lại mật khẩu"
+                        required
+                        type="password"
+                >
+                <label for="confirm"> Nhập lại mật khẩu </label>
             </div>
 
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="email" placeholder="Nhập email" name="email" required>
-                <label for="email">Nhập email</label>
+                <input
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        placeholder="Nhập email"
+                        required
+                        type="email"
+                >
+                <label for="email"> Nhập email </label>
             </div>
 
             <div class="form-floating mb-3">
-                <input type="file" class="form-control" id="avatar" placeholder="Ảnh đại diện" name="avatar">
-                <label for="avatar">Ảnh đại diện</label>
+                <input
+                        class="form-control"
+                        id="dienThoai"
+                        name="dienThoai"
+                        pattern="^0\d{9,10}$"
+                        placeholder="Nhập số điện thoại"
+                        required
+                        title="Số điện thoại phải bắt đầu bằng 0 và có 10 hoặc 11 chữ số."
+                        type="tel"
+                >
+                <label for="dienThoai"> Nhập số điện thoại </label>
+            </div>
+
+            <div class="form-floating mb-3">
+
+                <select
+                        class="form-select"
+                        id="gioiTinh"
+                        name="gioiTinh"
+                >
+                    <option selected value="">
+                        Chọn giới tính
+                    </option>
+
+                    <option value="Nam">
+                        Nam
+                    </option>
+
+                    <option value="Nữ">
+                        Nữ
+                    </option>
+
+                    <option value="Khác">
+                        Khác
+                    </option>
+                </select>
+
+                <label for="gioiTinh"> Giới tính </label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input
+                        class="form-control"
+                        id="ngaySinh"
+                        max="{{ current_date }}"
+                        name="ngaySinh"
+                        type="date"
+                >
+                <label for="ngaySinh"> Ngày sinh </label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <textarea
+                        class="form-control"
+                        id="diaChi"
+                        name="diaChi"
+                        placeholder="Nhập địa chỉ"
+                        required
+                        style="height: 100px"
+                ></textarea>
+                <label for="diaChi"> Nhập địa chỉ </label>
+            </div>
+
+            <div class="mb-3">
+                <label
+                        class="form-label"
+                        for="avatar"
+                > Ảnh đại diện
+                </label>
+
+                <input
+                        accept="image/*"
+                        class="form-control"
+                        id="avatar"
+                        name="avatar"
+                        type="file"
+                >
             </div>
 
             <div class="d-flex justify-content-center mt-3">
-                <button class="btn px-5" type="submit" style="background:#A56EFF; color:white;">ĐĂNG KÝ</button>
+                <button
+                        class="btn px-5"
+                        style="
+                        background:#13c54a;
+                        color:white;
+                    "
+                        type="submit"
+                > ĐĂNG KÝ
+                </button>
             </div>
         </form>
     </div>
 </div>
-
-{%endblock%}
+{% endblock %}
+</html>

@@ -1,193 +1,500 @@
 {% extends 'layout/base.html' %}
+
 {% block content %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}?v=1.1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/admin.css'
+    ) }}"
+>
 
 <div class="app-container">
+
     <aside class="sidebar">
-        <a href="/admin" class="nav-item active">
-            <i class="fas fa-ticket-alt"></i> <span>Danh sách Voucher</span>
+
+        <a
+            href="{{ url_for('create_staff_order') }}" class="btn btn-primary"
+        >
+            🛒 Tạo Đơn Hàng
         </a>
-        <a href="/create" class="nav-item">
-            <i class="fas fa-plus-circle"></i> <span>Thêm Voucher</span>
+
+        <a
+            href="{{ url_for('order_management') }}" class="btn btn-primary order-menu"
+        >
+            <span>Quản Lý Đơn Hàng</span>
+
+            <span id="pending-order-badge"
+                  class="order-badge"
+                  style="display: none;"
+            >
+                0
+            </span>
         </a>
+
+        <a
+            href="{{ url_for('product_management') }}" class="btn btn-primary order-menu"
+        >
+            <span>Quản Lý Sản Phẩm</span>
+
+            <span id="low-stock-badge"
+                  class="order-badge"
+                  {% if low_stock_count == 0 %}
+                      style="display: none;"
+                  {% endif %}>
+                {{ low_stock_count }}
+            </span>
+        </a>
+
+        <a
+            href="{{ url_for('account_management') }}"
+            class="btn btn-primary"
+        >
+            Quản Lý Tài Khoản
+        </a>
+
+        <a
+            href="{{ url_for('admin') }}" class="btn btn-primary-active"
+        >
+            Thống Kê - Báo Cáo
+        </a>
+
     </aside>
 
     <main class="main-content">
-        <div class="page-header">
-            <h2>Danh sách mã khuyến mãi</h2>
-            <a href="/create" class="btn-primary">+ Tạo mới</a>
+
+        <div class="title">
+
+            <h2>
+                Thống Kê - Báo Cáo
+            </h2>
+
         </div>
 
-        <!-- Flash message -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">
-            {{ message }}
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
+        <div class="dashboard-cards">
 
-        <div class="card-table">
-            <div class="filter-section">
-                <form method="GET">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text"
-                               name="kw"
-                               value="{{ kw or '' }}"
-                               placeholder="Nhập từ khóa tìm kiếm...">
-                    </div>
-                </form>
 
-                <div class="filter-controls">
-                    <form method="GET">
-                        <select name="trang_thai" onchange="this.form.submit()">
-                            <option value="">Tất cả</option>
+            <!-- DOANH THU HÔM NAY -->
 
-                            <option value="pending" {% if trang_thai=="pending" %}selected{% endif %}>
-                                pending
-                            </option>
+            <div class="dashboard-card">
 
-                            <option value="Active" {% if trang_thai=="active" %}selected{% endif %}>
-                                active
-                            </option>
+                <div class="card-title">
+                    Doanh thu hôm nay
+                </div>
 
-                            <option value="expired" {% if trang_thai=="expired" %}selected{% endif %}>
-                                expired
-                            </option>
-                        </select>
+                <div class="card-value">
+                    {{ "{:,.0f}".format(
+                        statistics.revenue_today or 0
+                    ) }} đ
+                </div>
 
-                        <select name="hinh_thuc" onchange="this.form.submit()">
-                            <option value="">Tất cả</option>
+                <div class="
+                    {% if revenue_growth >= 0 %}
+                        growth-up
+                    {% else %}
+                        growth-down
+                    {% endif %}
+                ">
 
-                            {% for ht in hinh_thuc_list %}
-                            <option value="{{ ht }}"
-                                    {% if ht== hinh_thuc %} selected {% endif %}>
-                                {{ ht }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </form>
+                    {% if revenue_growth >= 0 %}
+                        ↑
+                    {% else %}
+                        ↓
+                    {% endif %}
+
+                    {{ revenue_growth }}%
+                    so với hôm qua
 
                 </div>
+
             </div>
 
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Tiêu đề / Mã</th>
-                        <th>Hình thức</th>
-                        <th>Loại</th>
-                        <th>Trạng thái</th>
-                        <th>Sử dụng</th>
-                        <th>Bắt đầu</th>
-                        <th>Kết thúc</th>
-                        <th>Điều kiện giá trị</th>
-                        <th>Điều kiện sản phẩm</th>
-                        <th style="text-align: center;">Tác vụ</th>
-                    </tr>
-                    </thead>
 
-                    <tbody>
-                    {% for v in vouchers %}
-                    <tr>
-                        <td>
-                            <div class="voucher-code">{{ v.MaGG }}</div>
-                            <div class="voucher-desc">
-                                {{ v.MoTa if v.MoTa else "Không có mô tả" }}
-                            </div>
-                        </td>
+            <!-- ĐƠN HÀNG HÔM NAY -->
 
-                        <td>
-                            {% if v.Hinhthuc == "Khuyến mãi" %}
-                            <span class="badge bg-danger">Khuyến mãi</span>
-                            {% elif v.Hinhthuc == "Vận Chuyển" or (v.Hinhthuc and "ship" in v.Hinhthuc.lower()) %}
-                            <span class="badge bg-success">Shipping</span>
-                            {% else %}
-                            <span class="badge bg-secondary">{{ v.Hinhthuc }}</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if v.LoaiGG == "phantram" %}
-                            Giảm theo %
-                            {% else %}
-                            Giảm theo số tiền
-                            {% endif %}
-                        </td>
+            <div class="dashboard-card">
 
-                        <!-- FIX STATUS -->
-                        <td>
-                            {% if v.display_status == "active" %}
-                            <span class="status-badge active">active</span>
-                            {% elif v.display_status == "pending" %}
-                            <span class="status-badge pending">pending</span>
-                            {% else %}
-                            <span class="status-badge expired">expired</span>
-                            {% endif %}
-                        </td>
+                <div class="card-title">
+                    Đơn hàng hôm nay
+                </div>
 
-                        <td>
-                            <div class="usage-text">
-                                <strong>{{ v.DaSuDung }}</strong> / {{ v.SoLuong }}
-                            </div>
-                            <div class="progress" style="height: 5px; width: 100px;">
-                                <div class="progress-bar bg-success"
-                                     style="width: {{ (v.DaSuDung / v.SoLuong * 100) if v.SoLuong > 0 else 0 }}%">
-                                </div>
-                            </div>
-                        </td>
+                <div class="card-value">
+                    {{ statistics.orders_today }}
+                </div>
 
-                        <!-- FORMAT DATE -->
-                        <td>
-                            {{ v.NgayBD.strftime("%d/%m/%Y %H:%M") if v.NgayBD else "" }}
-                        </td>
+                <div class="
+                    {% if orders_growth >= 0 %}
+                        growth-up
+                    {% else %}
+                        growth-down
+                    {% endif %}
+                ">
 
-                        <td>
-                            {{ v.NgayKT.strftime("%d/%m/%Y %H:%M") if v.NgayKT else "" }}
-                        </td>
+                    {% if orders_growth >= 0 %}
+                        ↑
+                    {% else %}
+                        ↓
+                    {% endif %}
 
-                        <td>{{ "{:,.0f}".format(v.DieuKien).replace(",", ".") }} VNĐ</td>
-                        <td>{{ v.category.name or "Tất cả" }}</td>
+                    {{ orders_growth }}%
+                    so với hôm qua
 
-                        <td class="actions" style="text-align: center;">
+                </div>
 
-                            {% if not v.can_delete %}
-
-                                <!-- Không cho xóa -->
-                                <button class="btn-icon delete" disabled
-                                        style="opacity: 0.5; cursor: not-allowed;">
-                                    <i class="fas fa-lock"></i>
-                                </button>
-                            {% else %}
-                                <!-- Cho xóa -->
-                                <form action="/delete/{{ v.MaGG }}" method="POST" style="display:inline;">
-                                    <button onclick="return confirm('Bạn có chắc muốn xóa mã {{ v.MaGG }}?')"
-                                            class="btn-icon delete"
-                                            title="Xóa mã giảm giá">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-
-                                <a href="/edit/{{ v.MaGG }}" class="btn-icon edit" title="Chỉnh sửa mã này">
-                                    <i class="fas fa-edit" style="color: #3b82f6;"></i>
-                                </a>
-                            {% endif %}
-
-                        </td>
-
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-
-                </table>
             </div>
+
+
+
+            <!-- KHÁCH HÀNG MỚI -->
+
+            <div class="dashboard-card">
+
+                <div class="card-title">
+                    Khách hàng mới
+                </div>
+
+                <div class="card-value">
+                    {{ statistics.customers_today }}
+                </div>
+
+                <div class="
+                    {% if customers_growth >= 0 %}
+                        growth-up
+                    {% else %}
+                        growth-down
+                    {% endif %}
+                ">
+
+                    {% if customers_growth >= 0 %}
+                        ↑
+                    {% else %}
+                        ↓
+                    {% endif %}
+
+                    {{ customers_growth }}%
+                    so với hôm qua
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SẢN PHẨM BÁN CHẠY -->
+
+            <div class="dashboard-card">
+
+                <div class="card-title">
+                    Sản phẩm bán chạy nhất hôm nay
+                </div>
+
+                <p>{{ statistics.best_product_name }}</p>
+
+                <div class="card-value">
+                    <span>{{ statistics.best_product_quantity }}</span>
+                    <span>sản phẩm đã bán</span>
+                </div>
+
+            </div>
+
+
         </div>
+
+
+
+        <!-- ===================== -->
+        <!-- BIỂU ĐỒ -->
+        <!-- ===================== -->
+
+        <div class="dashboard-chart-row">
+
+
+            <!-- DOANH THU 7 NGÀY -->
+
+            <div class="dashboard-chart-card">
+
+                <h4>
+                    Doanh thu 7 ngày gần nhất
+                </h4>
+
+                <canvas
+                    id="revenueChart"
+                ></canvas>
+
+            </div>
+
+
+
+            <!-- DANH MỤC BÁN CHẠY -->
+
+            <div class="dashboard-chart-card">
+
+                <h4>
+                    Danh mục bán chạy
+                </h4>
+
+                <canvas
+                    id="categoryChart"
+                ></canvas>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ===================== -->
+        <!-- ĐƠN HÀNG GẦN NHẤT -->
+        <!-- ===================== -->
+
+        <div class="dashboard-table-card">
+
+            <div class="dashboard-table-header">
+
+                <h4>
+                    Đơn hàng gần nhất
+                </h4>
+
+                <a
+                    href="{{ url_for('order_management') }}"
+                    class="btn-action"
+                >
+                    Xem tất cả đơn hàng
+                </a>
+
+            </div>
+
+
+
+            <table class="table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Mã đơn hàng
+                        </th>
+
+                        <th>
+                            SDT Khách hàng
+                        </th>
+
+                        <th>
+                            Ngày đặt
+                        </th>
+
+                        <th>
+                            Tổng tiền
+                        </th>
+
+                        <th>
+                            Trạng thái
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+
+                <tbody>
+
+                    {% for order in recent_orders %}
+
+                    <tr>
+
+                        <td>
+                            {{ order.maDonHang }}
+                        </td>
+
+                        <td>
+                            {{ order.khachHangRef.dienThoai }}
+                        </td>
+
+                        <td>
+                            {{ order.ngayDat.strftime('%d/%m/%Y %H:%M') }}
+                        </td>
+
+                        <td>
+                            {{ "{:,.0f}".format(
+                                order.tongTien or 0
+                            ) }} đ
+                        </td>
+
+                        <td>
+
+                            <span class="status-badge status-active">
+                                {{ order.trangThai }}
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+
+                    {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="empty-order"
+                        >
+                            Không có đơn hàng.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- ===================== -->
+        <!-- SẢN PHẨM BÁN CHẠY -->
+        <!-- ===================== -->
+
+        <div class="dashboard-table-card">
+
+            <div class="dashboard-table-header">
+
+                <h4>
+                    Sản phẩm bán chạy
+                </h4>
+
+                <a
+                    href="{{ url_for('product_management') }}"
+                    class="btn-action"
+                >
+                    Xem tất cả sản phẩm
+                </a>
+
+            </div>
+
+
+
+            <table class="table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            STT
+                        </th>
+
+                        <th>
+                            Sản phẩm
+                        </th>
+
+                        <th>
+                            Danh mục
+                        </th>
+
+                        <th>
+                            Số lượng bán
+                        </th>
+
+                        <th>
+                            Doanh thu
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+
+                <tbody>
+
+                    {% for product in top_products %}
+
+                    <tr>
+
+                        <td>
+                            {{ loop.index }}
+                        </td>
+
+                        <td>
+                            {{ product.tenSanPham }}
+                        </td>
+
+                        <td>
+                            {{ product.tenDanhMuc }}
+                        </td>
+
+                        <td>
+                            {{ product.soLuongBan }}
+                        </td>
+
+                        <td>
+                            {{ "{:,.0f}".format(
+                                product.doanhThu or 0
+                            ) }} đ
+                        </td>
+
+                    </tr>
+
+
+                    {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="empty-order"
+                        >
+                            Không có dữ liệu.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
     </main>
+
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script
+    src="https://cdn.jsdelivr.net/npm/chart.js"
+></script>
+
+
+<script>
+
+    const dashboardData = {
+
+        revenue7Days:
+            {{ revenue_7_days | tojson }},
+
+        categoryStatistics:
+            {{ category_statistics | tojson }}
+
+    };
+
+</script>
+
+<script>
+    const pendingOrdersUrl = "{{ url_for('pending_orders') }}";
+</script>
+
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
 {% endblock %}

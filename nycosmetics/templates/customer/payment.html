@@ -1,0 +1,100 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/customer.css'
+    ) }}"
+>
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-body text-center">
+
+                    <h3 class="mb-4">
+                        Thanh toán chuyển khoản
+                    </h3>
+
+                    <p>
+                        Mã đơn hàng:
+                        <strong>
+                            {{ don_hang.maDonHang }}
+                        </strong>
+                    </p>
+
+                    <p>
+                        Số tiền:
+                        <strong class="text-danger">
+                            {{
+                                "{:,.0f}".format(
+                                    don_hang.tongTien|float
+                                )
+                            }}đ
+                        </strong>
+                    </p>
+
+                    <hr>
+
+                    <img
+                            src="{{ qr_url }}"
+                            alt="Mã QR thanh toán"
+                            class="img-fluid"
+                            style="max-width: 350px;"
+                    >
+
+                    <hr>
+
+                    <p>
+                        <strong>
+                            Nội dung chuyển khoản:
+                        </strong>
+                    </p>
+
+                    <div class="alert alert-info">
+
+                        {{ noi_dung }}
+
+                    </div>
+
+                    <p class="text-muted">
+
+                        Vui lòng chuyển đúng số tiền
+                        và nội dung chuyển khoản.
+
+                    </p>
+
+                    <div class="alert alert-warning">
+
+                        Sau khi chuyển khoản,
+                        nhân viên sẽ kiểm tra và xác nhận
+                        thanh toán cho đơn hàng.
+
+                    </div>
+
+                    <a
+                            href="{{ url_for('index') }}"
+                            class="btn btn-outline-secondary"
+                    >
+                        Về trang chủ
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

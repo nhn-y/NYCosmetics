@@ -1,0 +1,141 @@
+.order-detail-container {
+    padding: 30px;
+    background-color: #f8f7ff;
+    min-height: 100vh;
+}
+
+.order-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.order-detail-header h2 {
+    margin: 0 0 8px;
+    color: #222;
+}
+
+.order-detail-header p {
+    margin: 0;
+    color: #666;
+}
+
+.btn-back-order {
+    padding: 10px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    background-color: #ffffff;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.btn-back-order:hover {
+    background-color: #f1f1f1;
+}
+
+
+/* ==========================
+   THÔNG TIN ĐƠN HÀNG
+   ========================== */
+
+.order-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-item span {
+    color: #777;
+    font-size: 14px;
+}
+
+.info-item strong {
+    color: #222;
+}
+
+
+/* ==========================
+   DANH SÁCH SẢN PHẨM
+   ========================== */
+
+.product-list {
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.product-list h3 {
+    padding: 20px;
+    margin: 0;
+    border-bottom: 1px solid #eee;
+}
+
+.product-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-list th {
+    background-color: #fff6f7;
+    padding: 15px;
+    text-align: left;
+}
+
+.product-list td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.product-info img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.product-total {
+    font-weight: bold;
+}
+
+.empty-product {
+    text-align: center;
+    padding: 30px !important;
+    color: #777;
+}
+
+
+/* ==========================
+   TỔNG TIỀN
+   ========================== */
+
+.order-total {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+}
+
+.order-total strong {
+    color: #e75480;
+    font-size: 22px;
+}

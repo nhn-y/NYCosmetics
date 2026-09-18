@@ -1,0 +1,262 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/admin.css'
+    ) }}"
+>
+
+<div class="container mt-4">
+
+    <h2>
+        Thêm sản phẩm
+    </h2>
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+    >
+
+        <div class="mb-3">
+
+            <label>
+                Tên sản phẩm
+            </label>
+
+            <input
+                type="text"
+                name="tenSanPham"
+                class="form-control"
+                required
+            >
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Hình ảnh sản phẩm
+            </label>
+
+            <input
+                type="file"
+                name="hinhAnh"
+                class="form-control"
+                accept=".jpg,.jpeg,.png,.webp"
+            >
+
+            <small class="text-muted">
+                Chỉ chấp nhận JPG, JPEG, PNG hoặc WEBP.
+            </small>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <label>
+                    Danh mục
+                </label>
+
+                <select
+                    name="maDanhMuc"
+                    class="form-select"
+                    required
+                >
+
+                    <option value="">
+                        Chọn danh mục
+                    </option>
+
+                    {% for category in categories %}
+
+                    <option
+                        value="{{ category.maDanhMuc }}"
+                    >
+                        {{ category.tenDanhMuc }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+                <label>
+                    Thương hiệu
+                </label>
+
+                <select
+                    name="maThuongHieu"
+                    class="form-select"
+                    required
+                >
+
+                    <option value="">
+                        Chọn thương hiệu
+                    </option>
+
+                    {% for brand in brands %}
+
+                    <option
+                        value="{{ brand.maThuongHieu }}"
+                    >
+                        {{ brand.tenThuongHieu }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Giá nhập
+                </label>
+
+                <input
+                    type="number"
+                    name="giaNhap"
+                    class="form-control"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Giá bán
+                </label>
+
+                <input
+                    type="number"
+                    name="giaBan"
+                    class="form-control"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Tồn tối thiểu
+                </label>
+
+                <input
+                    type="number"
+                    name="tonToiThieu"
+                    class="form-control"
+                    min="0"
+                    value="0"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Số lượng
+            </label>
+
+            <input
+                type="number"
+                name="soLuong"
+                class="form-control"
+                min="0"
+                value="0"
+            >
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Mô tả
+            </label>
+
+            <textarea
+                name="moTa"
+                class="form-control"
+                rows="4"
+            ></textarea>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Thành phần
+            </label>
+
+            <textarea
+                name="thanhPhan"
+                class="form-control"
+                rows="4"
+            ></textarea>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Công dụng
+            </label>
+
+            <textarea
+                name="congDung"
+                class="form-control"
+                rows="4"
+            ></textarea>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="btn btn-success"
+        >
+            Thêm sản phẩm
+        </button>
+
+
+        <a
+            href="{{ url_for('product_management') }}"
+            class="btn btn-secondary"
+        >
+            Hủy
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

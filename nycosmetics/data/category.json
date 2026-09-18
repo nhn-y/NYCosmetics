@@ -1,0 +1,38 @@
+[
+    {
+        "maDanhMuc": "DM000001",
+        "tenDanhMuc": "Chăm sóc da",
+        "moTa": "Các sản phẩm chăm sóc và dưỡng da mặt.",
+        "trangThai": true
+    },
+    {
+        "maDanhMuc": "DM000002",
+        "tenDanhMuc": "Trang điểm",
+        "moTa": "Các sản phẩm phục vụ nhu cầu trang điểm.",
+        "trangThai": true
+    },
+    {
+        "maDanhMuc": "DM000003",
+        "tenDanhMuc": "Chăm sóc tóc",
+        "moTa": "Các sản phẩm chăm sóc, nuôi dưỡng và tạo kiểu tóc.",
+        "trangThai": true
+    },
+    {
+        "maDanhMuc": "DM000004",
+        "tenDanhMuc": "Chăm sóc cơ thể",
+        "moTa": "Các sản phẩm chăm sóc da và cơ thể.",
+        "trangThai": true
+    },
+    {
+        "maDanhMuc": "DM000005",
+        "tenDanhMuc": "Chống nắng",
+        "moTa": "Các sản phẩm bảo vệ da khỏi tác động của tia UV.",
+        "trangThai": true
+    },
+    {
+        "maDanhMuc": "DM000006",
+        "tenDanhMuc": "Nước hoa",
+        "moTa": "Các sản phẩm nước hoa và sản phẩm tạo hương thơm.",
+        "trangThai": true
+    }
+]

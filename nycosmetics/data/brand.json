@@ -1,0 +1,75 @@
+[
+    {
+        "maThuongHieu": "TH000001",
+        "tenThuongHieu": "CeraVe",
+        "quocGia": "Hoa Kỳ",
+        "logo": "cerave.png",
+        "moTa": "Thương hiệu chăm sóc da với các sản phẩm làm sạch và dưỡng ẩm.",
+        "trangThai": true
+    },
+    {
+        "maThuongHieu": "TH000002",
+        "tenThuongHieu": "La Roche-Posay",
+        "quocGia": "Pháp",
+        "logo": "la_roche_posay.png",
+        "moTa": "Thương hiệu dược mỹ phẩm chuyên về chăm sóc da.",
+        "trangThai": true
+    },
+    {
+        "maThuongHieu": "TH000003",
+        "tenThuongHieu": "The Ordinary",
+        "quocGia": "Canada",
+        "logo": "the_ordinary.png",
+        "moTa": "Thương hiệu mỹ phẩm tập trung vào các sản phẩm chăm sóc da với thành phần chuyên biệt.",
+        "trangThai": true
+    },
+    {
+        "maThuongHieu": "TH000004",
+        "tenThuongHieu": "L'Oréal",
+        "quocGia": "Pháp",
+        "logo": "loreal.png",
+        "moTa": "Thương hiệu mỹ phẩm với nhiều dòng sản phẩm chăm sóc da và trang điểm.",
+        "trangThai": true
+    },
+    {
+        "maThuongHieu": "TH000005",
+        "tenThuongHieu": "Maybelline",
+        "quocGia": "Hoa Kỳ",
+        "logo": "maybelline.png",
+        "moTa": "Thương hiệu mỹ phẩm trang điểm phổ biến.",
+        "trangThai": true
+    },
+    {
+        "maThuongHieu": "TH000006",
+        "tenThuongHieu": "Dove",
+        "quocGia": "Anh",
+        "logo": "dove.png",
+        "moTa": "Thương hiệu chuyên về các sản phẩm chăm sóc cơ thể và tóc.",
+        "trangThai": true
+    },
+    {
+        "maThuongHieu": "TH000007",
+        "tenThuongHieu": "SVR",
+        "quocGia": "Pháp",
+        "logo": "svr.png",
+        "moTa": "Hãng chuyên cung cấp các giải pháp chăm sóc da liễu an toàn cho da nhạy cảm.",
+        "trangThai": true
+    },
+
+    {
+          "maThuongHieu": "TH000008",
+          "tenThuongHieu": "Olay",
+          "quocGia": "Mỹ",
+          "logo": "olay.png",
+          "moTa": "Olay là thương hiệu mỹ phẩm chăm sóc da phân khúc tầm trung đến cận cao cấp, dễ tiếp cận với nhiều đối tượng người dùng.Sản phẩm chính: Kem dưỡng da mặt, serum, sữa tắm, dưỡng thể và sữa rửa mặt",
+          "trangThai": true
+    },
+    {
+          "maThuongHieu": "TH000009",
+          "tenThuongHieu": "Cindy",
+          "quocGia": "Việt Nam",
+          "logo": "cindy.png",
+          "moTa": "Nước hoa Cindy là dòng sản phẩm nước hoa nội địa nổi tiếng thuộc Công ty Cổ phần Mỹ phẩm Sài Gòn (SCC), ra mắt lần đầu vào năm 1994.",
+          "trangThai": true
+    }
+]

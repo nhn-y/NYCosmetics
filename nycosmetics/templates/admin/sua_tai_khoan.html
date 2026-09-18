@@ -1,0 +1,214 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/admin.css'
+    ) }}"
+>
+
+<div class="container mt-4">
+
+    <h2>
+        Sửa tài khoản
+    </h2>
+
+    <form
+        method="POST"
+    >
+
+        <div class="mb-3">
+
+            <label>
+                Mã tài khoản
+            </label>
+
+            <input
+                type="text"
+                class="form-control"
+                value="{% if user.type == 'admin' %}
+                    {{ user.maAdmin }}
+                {% elif user.type == 'nhanVien' %}
+                    {{ user.maNhanVien }}
+                {% endif %}"
+                readonly
+            >
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Loại tài khoản
+            </label>
+
+            <input
+                type="text"
+                class="form-control"
+                value="{% if user.type == 'admin' %}
+                    Admin
+                {% elif user.type == 'nhanVien' %}
+                    Nhân viên
+                {% endif %}"
+                readonly
+            >
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <label>
+                    Họ và tên
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    value="{{ user.name }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+                <label>
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    value="{{ user.username }}"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    value="{{ user.email or '' }}"
+                >
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+                <label>
+                    Số điện thoại
+                </label>
+
+                <input
+                    type="text"
+                    name="dienThoai"
+                    class="form-control"
+                    value="{{ user.dienThoai or '' }}"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Mật khẩu mới
+            </label>
+
+            <input
+                type="password"
+                name="password"
+                class="form-control"
+                placeholder="Để trống nếu không muốn thay đổi"
+            >
+
+            <small class="text-muted">
+                Chỉ nhập khi muốn thay đổi mật khẩu.
+            </small>
+
+        </div>
+
+
+        {% if user.type == "nhanVien" %}
+
+        <div class="mb-3">
+
+            <label>
+                Trạng thái
+            </label>
+
+            <select
+                name="trangThai"
+                class="form-select"
+            >
+
+                <option
+                    value="1"
+                    {% if user.trangThai %}
+                        selected
+                    {% endif %}
+                >
+                    Đang hoạt động
+                </option>
+
+                <option
+                    value="0"
+                    {% if not user.trangThai %}
+                        selected
+                    {% endif %}
+                >
+                    Ngừng hoạt động
+                </option>
+
+            </select>
+
+        </div>
+
+        {% endif %}
+
+
+        <button
+            type="submit"
+            class="btn btn-success"
+        >
+            Lưu thay đổi
+        </button>
+
+
+        <a
+            href="{{ url_for('account_management') }}"
+            class="btn btn-secondary"
+        >
+            Hủy
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

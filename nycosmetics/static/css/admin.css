@@ -1,0 +1,469 @@
+:root {
+    --primary-color: #13c54a;
+    --dark-purple: #13c54a;
+    --sidebar-bg: #e9e2ff;
+    --bg-light: #f3f0ff;
+    --text-gray: #666;
+    --item-bg: #F3DFFF;
+    --text-dark: #333;
+    --white: #ffffff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+.app-container { display: flex; min-height: calc(100vh - 60px); }
+
+.main-content { flex: 1; padding: 30px; }
+
+.sidebar {
+    width: 250px;
+    background: #e75480;
+    min-height: 100vh;
+    padding: 20px 15px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar .btn {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.action {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background: var(--dark-purple);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(59, 28, 113, 0.3); }
+
+.btn-primary-active {
+    background-color: rgba(255, 255, 255, 0.35);
+    font-weight: 500;
+}
+
+.order-update-form {
+    display: contents;
+}
+
+.status-select,
+.payment-select {
+    width: 145px;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 14px;
+    background-color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+.status-select:focus,
+.payment-select:focus {
+    border-color: #e75480;
+}
+.btn-action{
+    display: inline-block;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    background-color: #e75480;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+    text-decoration: none;
+
+}
+
+.btn-action:hover {
+    background-color: #d9436d;
+    text-decoration: none;
+
+}
+
+.order-page {
+    padding: 20px 30px;
+}
+
+.title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   TAB TRẠNG THÁI
+   ========================= */
+
+.order-tabs {
+    display: flex;
+    gap: 35px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.order-tab {
+    padding: 10px 5px;
+    text-decoration: none;
+    color: #555;
+    font-size: 16px;
+    position: relative;
+}
+
+.order-tab:hover {
+    color: #d94f70;
+}
+
+.order-tab.active {
+    color: #d94f70;
+    font-weight: 600;
+}
+
+.order-tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #d94f70;
+}
+
+
+/* =========================
+   BẢNG ĐƠN HÀNG
+   ========================= */
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border: 1px solid #eee;
+    border-radius: 10px;
+}
+
+.table th {
+    background-color: #fff5f5;
+    padding: 15px;
+    font-size: 15px;
+    text-align: left;
+}
+
+.table td {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+}
+
+.table tbody tr:hover {
+    background-color: #fafafa;
+}
+
+.order-code {
+    font-weight: 600;
+}
+
+.order-total {
+    font-weight: 600;
+}
+
+.empty-order {
+    text-align: center;
+    padding: 40px !important;
+}
+
+
+/* =========================
+   TRẠNG THÁI
+   ========================= */
+
+.status {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.status-waiting {
+    background-color: #fff1d8;
+    color: #c78300;
+}
+
+.status-confirmed {
+    background-color: #e3f5e8;
+    color: #32864b;
+}
+
+.status-shipping {
+    background-color: #fff1dc;
+    color: #bd7410;
+}
+
+.status-delivered {
+    background-color: #e4f4e8;
+    color: #32864b;
+}
+
+.status-cancelled {
+    background-color: #fde7e7;
+    color: #d34c4c;
+}
+
+
+/* =========================
+   THANH TOÁN
+   ========================= */
+.status-select,
+.payment-select {
+    width: 180px;
+    height: 48px;
+    padding: 0 14px;
+    border: 1px solid #e75480;
+    border-radius: 25px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.search-order {
+    max-width: 700px;
+    margin: 0 auto 25px;
+}
+
+.search-order .form-control {
+    height: 48px;
+    font-size: 16px;
+}
+
+.search-order .btn {
+    width: 120px;
+    height: 48px;
+    white-space: nowrap;
+}
+
+.status-select:focus,
+.payment-select:focus {
+    border-color: #e75480;
+    box-shadow: 0 0 0 2px rgba(231, 84, 128, 0.1);
+    outline: none;
+}
+
+.payment-paid {
+    background-color: #e3f5e8;
+    color: #32864b;
+}
+
+.payment-unpaid {
+    background-color: #fde7e7;
+    color: #d34c4c;
+}
+
+
+/* =========================
+   FOOTER
+   ========================= */
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.count {
+    color: #555;
+}
+
+
+/* =========================
+   PHÂN TRANG
+   ========================= */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pagination a {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+    color: #333;
+
+    border-radius: 5px;
+}
+
+.pagination a:hover {
+    background-color: #f5eeee;
+}
+
+.pagination a.active {
+    background-color: #fde7e7;
+    color: #d34c4c;
+    font-weight: 600;
+}
+
+.pagination-disabled {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #aaa;
+}
+
+.pagination-dots {
+    padding: 0 5px;
+}
+
+/* ===================== */
+.product-image {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.stock-low {
+    color: red;
+    font-weight: 600;
+}
+
+.status-active {
+    color: #198754;
+    font-weight: 600;
+}
+
+.status-inactive {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.empty-product {
+    padding: 30px !important;
+    color: #777;
+}
+
+/* KHU VỰC BIỂU ĐỒ */
+.dashboard-chart-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+
+/* ===================== */
+/* CARD BIỂU ĐỒ */
+/* ===================== */
+
+.dashboard-chart-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+
+    position: relative;
+
+    height: 320px;
+}
+
+
+/* TIÊU ĐỀ BIỂU ĐỒ */
+
+.dashboard-chart-card h4 {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+
+/* CANVAS */
+
+.dashboard-chart-card canvas {
+    width: 100% !important;
+    height: 240px !important;
+}
+
+.dashboard-card {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    text-decoration: none !important;
+    color: var(--text-dark);
+    font-weight: 600;
+    background: var(--item-bg);
+    margin-bottom: 12px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-item:hover {
+    background: var(--white) !important;
+    color: var(--primary-color) !important;
+    transform: translateX(10px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.order-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.order-badge {
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+
+    background-color: #dc3545;
+    color: white;
+
+    border-radius: 50%;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+    font-weight: 600;
+}

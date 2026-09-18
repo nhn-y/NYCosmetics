@@ -1,0 +1,223 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/admin.css'
+    ) }}"
+>
+
+<div class="container mt-5">
+
+    <div class="invoice">
+
+        <div class="text-center mb-4">
+
+            <h2>
+                NYCOSMETICS
+            </h2>
+
+            <h4>
+                HÓA ĐƠN BÁN HÀNG
+            </h4>
+
+        </div>
+
+        <!-- THÔNG TIN HÓA ĐƠN -->
+        <div class="row mb-3">
+
+            <div class="col-md-6">
+
+                <p>
+                    <strong>Mã hóa đơn:</strong>
+
+                    {{ don_hang.maDonHang }}
+                </p>
+
+                <p>
+                    <strong>Ngày tạo hóa đơn:</strong>
+
+                    {{ don_hang.ngayDat.strftime(
+                        "%H:%M:%S - %d/%m/%Y"
+                    ) }}
+                </p>
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <p>
+                    <strong>Nhân viên:</strong>
+                    {% if employee %}
+                        {{ employee.name }}
+                    {% else %}
+                        Không có
+                    {% endif %}
+                </p>
+
+                <p>
+                    <strong>Khách hàng:</strong>
+
+                    {{ don_hang.khachHangRef.name }}
+                </p>
+
+                <p>
+                    <strong>SDT khách hàng:</strong>
+
+                    {{ don_hang.khachHangRef.dienThoai }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+        <!-- DANH SÁCH SẢN PHẨM -->
+        <table class="table table-bordered">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        STT
+                    </th>
+
+                    <th>
+                        Sản phẩm
+                    </th>
+
+                    <th>
+                        Số lượng
+                    </th>
+
+                    <th>
+                        Đơn giá
+                    </th>
+
+                    <th>
+                        Thành tiền
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for ct in don_hang.chiTietDonHangs %}
+
+                <tr>
+
+                    <td>
+                        {{ loop.index }}
+                    </td>
+
+                    <td>
+                        {{ ct.sanPham.tenSanPham }}
+                    </td>
+
+                    <td>
+                        {{ ct.soLuong }}
+                    </td>
+
+                    <td>
+                        {{
+                            "{:,.0f}".format(
+                                ct.donGia|float
+                            )
+                        }}đ
+                    </td>
+
+                    <td>
+                        {{
+                            "{:,.0f}".format(
+                                ct.thanhTien|float
+                            )
+                        }}đ
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        <!-- ===================== -->
+        <!-- TỔNG TIỀN -->
+        <!-- ===================== -->
+
+        <div class="text-end">
+
+            <h5>
+
+                Tổng tiền:
+
+                <strong>
+
+                    {{
+                        "{:,.0f}".format(
+                            don_hang.tongTien|float
+                        )
+                    }}đ
+
+                </strong>
+
+            </h5>
+
+        </div>
+
+
+        <hr>
+
+
+        <div class="text-center mt-4">
+
+            <p>
+                Cảm ơn quý khách đã mua hàng!
+            </p>
+
+        </div>
+
+
+        <!-- ===================== -->
+        <!-- NÚT -->
+        <!-- ===================== -->
+
+        <div class="text-center mt-4">
+
+            <button
+                    class="btn btn-primary"
+                    onclick="window.print()"
+            >
+
+                🖨 In hóa đơn
+
+            </button>
+
+            <a
+                    href="{{ url_for('create_staff_order') }}"
+                    class="btn btn-primary"
+            >
+
+                ← Về trang tạo đơn hàng
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

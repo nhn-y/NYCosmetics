@@ -1,17 +1,17 @@
-<nav class="navbar navbar-expand-sm navbar-dark " style="background-color:#C28BEF;">
+<nav class="navbar navbar-expand-sm navbar-dark " style="background-color:#13c54a;">
     <div class="container-fluid">
         {% if current_user.is_authenticated %}
-        {% if current_user.user_role|int == 1 %}
-        <a class="navbar-brand fw-bold text-primary" href="/admin">
-            <i class="fa-solid fa-user-shield me-2"></i> DISCOUNT MANAGER
+        {% if current_user.userRole|int in [1, 2] %}
+        <a class="navbar-brand fw-bold text-white" href="/admin">
+            <i class="fa-solid fa-user-shield me-2"></i> NYCOSMETICS
         </a>
         {% else %}
         <a class="navbar-brand fw-bold" href="/">
-            <i class="fa-solid fa-shop me-2"></i> BÁCH HÓA SHOP
+            <i class="fa-solid fa-shop me-2"></i> NYCosmetics
         </a>
         {% endif %}
         {% else %}
-        <a class="navbar-brand fw-bold" href="/">BÁCH HÓA SHOP</a>
+        <a class="navbar-brand fw-bold" href="/"> NYCosmetics </a>
         {% endif %}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span class="navbar-toggler-icon"></span>
@@ -26,23 +26,19 @@
                 <a class="nav-link active" href="" style="padding: 0px 5px; font-size: 0.85rem;">
                     Chào {{current_user.name}}
                 </a>
+            </li>
 
             <li class="nav-item">
-                <a class="nav-link active" href="/logout" style="padding: 0px 5px; font-size: 0.85rem;">&#128220; Đăng
-                    xuất</a>
+                <a class="nav-link active" href="/logout" style="padding: 0px 5px; font-size: 0.85rem;">&#128220; Đăng xuất</a>
             </li>
-            </li>
-
 
             {% else %}
             <li class="nav-item">
-                <a class="nav-link active" href="/login" style="padding: 0px 5px; font-size: 0.85rem;">&#128220;Đăng
-                    nhập</a>
+                <a class="nav-link active" href="/login" style="padding: 0px 5px; font-size: 0.85rem;">&#128220;Đăng nhập</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link active" href="/register" style="padding: 0px 5px; font-size: 0.85rem;">&#128105;Đăng
-                    ký</a>
+                <a class="nav-link active" href="/register" style="padding: 0px 5px; font-size: 0.85rem;">&#128105;Đăng ký</a>
             </li>
             {% endif %}
         </div>

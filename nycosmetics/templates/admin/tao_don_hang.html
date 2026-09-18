@@ -2,36 +2,44 @@
 
 {% block content %}
 <link href="{{ url_for('static', filename='css/customer.css') }}" rel="stylesheet">
+
 <div class="app-container">
+
     <aside class="sidebar">
         <nav>
-            <a class="nav-item {{ 'active' if not request.args.get('category_id') and not request.args.get('brand_id') }}"
-               href="{{ url_for('index') }}">
-                <span>🏠 Trang chủ</span>
+
+            <a class="nav-item"
+               href="{{ url_for('admin') }}">
+                <span>🏠 Quản lý</span>
             </a>
 
-            <a class="nav-item" href="{{ url_for('cart') }}">
+            <a class="nav-item active"
+               href="{{ url_for('staff_cart') }}">
                 <div class="position-relative">
-                    <span>🛒 Giỏ hàng</span>
+                    <span>🛒 Tạo đơn hàng</span>
+
                     <span class="cart-counter badge rounded-circle bg-danger position-absolute top-0 start-100 translate-middle"
-                            id="cart-counter">
+                          id="staff-cart-counter">
                         {{ total_quantity }}
                     </span>
                 </div>
             </a>
 
-            <a class="nav-item" href="{{ url_for('purchase_history') }}">
-                Lịch sử mua hàng
-            </a>
         </nav>
     </aside>
 
+
     <main class="main-content">
+
         <div class="search-section">
             <div class="search-group-wrapper">
 
-                <form action="/" class="input-group search-group-main" method="get">
+                <form action="{{ url_for('create_staff_order') }}"
+                      class="input-group search-group-main"
+                      method="GET">
+
                     <div class="dropdown">
+
                         <button class="btn btn-category dropdown-toggle"
                                 data-bs-toggle="dropdown"
                                 type="button">
@@ -39,11 +47,13 @@
                         </button>
 
                         <ul class="dropdown-menu">
+
                             {% for c in categories %}
+
                             <li>
                                 <a class="dropdown-item"
                                    href="{{ url_for(
-                                       'index',
+                                       'create_staff_order',
                                        category_id=c.maDanhMuc,
                                        brand_id=request.args.get('brand_id', ''),
                                        kw=request.args.get('kw', '')
@@ -51,6 +61,7 @@
                                     {{ c.tenDanhMuc }}
                                 </a>
                             </li>
+
                             {% endfor %}
 
                             <li>
@@ -59,14 +70,18 @@
 
                             <li>
                                 <a class="dropdown-item"
-                                   href="{{ url_for('index') }}">
+                                   href="{{ url_for('create_staff_order') }}">
                                     ✨ Tất cả sản phẩm
                                 </a>
                             </li>
+
                         </ul>
+
                     </div>
 
+
                     <div class="dropdown">
+
                         <button class="btn btn-category dropdown-toggle"
                                 data-bs-toggle="dropdown"
                                 type="button">
@@ -77,10 +92,11 @@
                             style="max-height: 350px; overflow-y: auto;">
 
                             {% for b in brands %}
+
                             <li>
                                 <a class="dropdown-item"
                                    href="{{ url_for(
-                                       'index',
+                                       'create_staff_order',
                                        brand_id=b.maThuongHieu,
                                        category_id=request.args.get('category_id', ''),
                                        kw=request.args.get('kw', '')
@@ -88,6 +104,7 @@
                                     {{ b.tenThuongHieu }}
                                 </a>
                             </li>
+
                             {% endfor %}
 
                             <li>
@@ -96,12 +113,15 @@
 
                             <li>
                                 <a class="dropdown-item"
-                                   href="{{ url_for('index') }}">
+                                   href="{{ url_for('create_staff_order') }}">
                                     ✨ Tất cả thương hiệu
                                 </a>
                             </li>
+
                         </ul>
+
                     </div>
+
 
                     <input class="form-control search-input"
                            name="kw"
@@ -120,20 +140,30 @@
                             type="submit">
                         Lọc
                     </button>
+
                 </form>
+
             </div>
         </div>
 
+
+        <!-- DANH SÁCH SẢN PHẨM -->
+
         <div class="product-grid">
+
             {% if products %}
+
             {% for p in products %}
 
             <div class="product-card">
+
                 <div class="product-img-wrapper">
+
                     <a href="{{ url_for(
-                        'product_detail',
-                        product_name=p.tenSanPham
+                        'admin_product_detail',
+                        ma_san_pham=p.maSanPham
                     ) }}">
+
                         {% if p.hinhAnh %}
 
                             {% if p.hinhAnh.startswith('http://')
@@ -161,46 +191,77 @@
                             {% endif %}
 
                         {% endif %}
+
                     </a>
+
                 </div>
 
                 <div class="p-3">
+
                     <h6 class="product-title">
+
                         <a href="{{ url_for(
-                            'product_detail',
-                            product_name=p.tenSanPham
+                            'admin_product_detail',
+                            ma_san_pham=p.maSanPham
                         ) }}"
                            style="text-decoration: none; color: inherit;">
+
                             {{ p.tenSanPham }}
+
                         </a>
+
                     </h6>
 
+
                     <p class="product-price">
+
                         {{ "{:,.0f}".format(p.giaBan|float) }}đ
+
                     </p>
 
                     <button class="btn btn-add-to-cart w-100"
-                            onclick='addToCart(
+                            onclick='addStaffToCart(
                                 {{ p.maSanPham|tojson }},
                                 {{ p.tenSanPham|tojson }},
                                 {{ p.giaBan|tojson }},
                                 {{ p.hinhAnh|tojson }},
                                 {{ p.maDanhMuc|tojson }}
-                            )'> Thêm vào giỏ
+                            )'>
+
+                        Thêm vào đơn hàng
+
                     </button>
+
                 </div>
+
             </div>
+
             {% endfor %}
+
+
             {% else %}
 
             <div class="text-center w-100 mt-5">
-                <p class="text-muted"> Không có sản phẩm nào phù hợp với yêu cầu của bạn. </p>
 
-                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('index') }}"> Quay lại trang chủ </a>
+                <p class="text-muted">
+                    Không có sản phẩm nào phù hợp với yêu cầu của bạn.
+                </p>
+
+                <a class="btn btn-sm btn-outline-primary"
+                   href="{{ url_for('create_staff_order') }}">
+
+                    Quay lại
+
+                </a>
+
             </div>
+
             {% endif %}
+
         </div>
+
         <!-- PHÂN TRANG -->
+
         {% if pages > 1 %}
 
         <div class="pagination">
@@ -209,7 +270,7 @@
             {% if current_page > 1 %}
 
                 <a href="{{ url_for(
-                    'index',
+                    'create_staff_order',
                     page=current_page - 1,
                     category_id=request.args.get('category_id'),
                     brand_id=request.args.get('brand_id'),
@@ -234,7 +295,7 @@
 
                     <a
                         href="{{ url_for(
-                            'index',
+                            'create_staff_order',
                             page=page,
                             category_id=request.args.get('category_id'),
                             brand_id=request.args.get('brand_id'),
@@ -261,7 +322,7 @@
             {% if current_page < pages %}
 
                 <a href="{{ url_for(
-                    'index',
+                    'create_staff_order',
                     page=current_page + 1,
                     category_id=request.args.get('category_id'),
                     brand_id=request.args.get('brand_id'),
@@ -281,10 +342,16 @@
         </div>
 
         {% endif %}
+
     </main>
+
 </div>
+
 {% endblock %}
 
+
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/staff_cart.js') }}"></script>
+
 {% endblock %}

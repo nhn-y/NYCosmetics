@@ -1,0 +1,382 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/admin.css'
+    ) }}"
+>
+
+<div class="container mt-4">
+
+    <h2>
+        Sửa sản phẩm
+    </h2>
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+    >
+
+        <div class="mb-3">
+
+            <label>
+                Mã sản phẩm
+            </label>
+
+            <input
+                type="text"
+                class="form-control"
+                value="{{ product.maSanPham }}"
+                readonly
+            >
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Tên sản phẩm
+            </label>
+
+            <input
+                type="text"
+                name="tenSanPham"
+                class="form-control"
+                value="{{ product.tenSanPham }}"
+                required
+            >
+
+        </div>
+
+
+        <!-- ẢNH HIỆN TẠI -->
+
+        <div class="mb-3">
+
+            <label>
+                Hình ảnh hiện tại
+            </label>
+
+            <div>
+
+                {% if product.hinhAnh %}
+
+                    {% if product.hinhAnh.startswith('http://')
+                          or product.hinhAnh.startswith('https://') %}
+
+                        <!-- Cloudinary -->
+                        <img
+                            src="{{ product.hinhAnh }}"
+                            alt="{{ product.tenSanPham }}"
+                            class="product-image"
+                            style="
+                                width: 150px;
+                                height: 150px;
+                                object-fit: contain;
+                                border: 1px solid #ddd;
+                                border-radius: 8px;
+                                padding: 5px;
+                            "
+                        >
+
+                    {% else %}
+
+                        <!-- Local: cerave-logo.png -->
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='pictures/products/' ~ product.hinhAnh
+                            ) }}"
+                            alt="{{ product.tenSanPham }}"
+                            class="product-image"
+                            style="
+                                width: 150px;
+                                height: 150px;
+                                object-fit: contain;
+                                border: 1px solid #ddd;
+                                border-radius: 8px;
+                                padding: 5px;
+                            "
+                        >
+
+                    {% endif %}
+
+                {% else %}
+
+                <p class="text-muted">
+                    Chưa có hình ảnh
+                </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- UPLOAD ẢNH MỚI -->
+
+        <div class="mb-3">
+
+            <label>
+                Thay đổi hình ảnh
+            </label>
+
+            <input
+                type="file"
+                name="hinhAnh"
+                class="form-control"
+                accept=".jpg,.jpeg,.png,.webp"
+            >
+
+            <small class="text-muted">
+                Nếu không chọn ảnh mới thì giữ nguyên ảnh hiện tại.
+            </small>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <label>
+                    Danh mục
+                </label>
+
+                <select
+                    name="maDanhMuc"
+                    class="form-select"
+                    required
+                >
+
+                    {% for category in categories %}
+
+                    <option
+                        value="{{ category.maDanhMuc }}"
+                        {% if product.maDanhMuc ==
+                            category.maDanhMuc %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ category.tenDanhMuc }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+                <label>
+                    Thương hiệu
+                </label>
+
+                <select
+                    name="maThuongHieu"
+                    class="form-select"
+                    required
+                >
+
+                    {% for brand in brands %}
+
+                    <option
+                        value="{{ brand.maThuongHieu }}"
+                        {% if product.maThuongHieu ==
+                            brand.maThuongHieu %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ brand.tenThuongHieu }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Giá nhập
+                </label>
+
+                <input
+                    type="number"
+                    name="giaNhap"
+                    class="form-control"
+                    min="0"
+                    value="{{ product.giaNhap }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Giá bán
+                </label>
+
+                <input
+                    type="number"
+                    name="giaBan"
+                    class="form-control"
+                    min="0"
+                    value="{{ product.giaBan }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Tồn tối thiểu
+                </label>
+
+                <input
+                    type="number"
+                    name="tonToiThieu"
+                    class="form-control"
+                    min="0"
+                    value="{{ product.tonToiThieu }}"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Số lượng
+            </label>
+
+            <input
+                type="number"
+                name="soLuong"
+                class="form-control"
+                min="0"
+                value="{{ product.soLuong }}"
+            >
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Trạng thái
+            </label>
+
+            <select
+                name="trangThai"
+                class="form-select"
+            >
+
+                <option
+                    value="1"
+                    {% if product.trangThai %}
+                        selected
+                    {% endif %}
+                >
+                    Đang bán
+                </option>
+
+                <option
+                    value="0"
+                    {% if not product.trangThai %}
+                        selected
+                    {% endif %}
+                >
+                    Ngừng bán
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Mô tả
+            </label>
+
+            <textarea
+                name="moTa"
+                class="form-control"
+                rows="4"
+            >{{ product.moTa or "" }}</textarea>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Thành phần
+            </label>
+
+            <textarea
+                name="thanhPhan"
+                class="form-control"
+                rows="4"
+            >{{ product.thanhPhan or "" }}</textarea>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label>
+                Công dụng
+            </label>
+
+            <textarea
+                name="congDung"
+                class="form-control"
+                rows="4"
+            >{{ product.congDung or "" }}</textarea>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="btn btn-success"
+        >
+            Lưu thay đổi
+        </button>
+
+
+        <a
+            href="{{ url_for('product_management') }}"
+            class="btn btn-secondary"
+        >
+            Hủy
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

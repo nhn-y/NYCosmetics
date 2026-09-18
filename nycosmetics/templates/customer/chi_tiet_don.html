@@ -1,0 +1,350 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<link href="{{ url_for('static', filename='css/customer.css') }}" rel="stylesheet">
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>
+            <i class="fa-solid fa-file-invoice"></i>
+            Chi tiết đơn hàng
+        </h2>
+
+        <a
+            href="{{ url_for('purchase_history') }}"
+            class="btn btn-outline-secondary"
+        >
+            Quay lại
+        </a>
+
+    </div>
+
+
+    <!-- Thông tin đơn hàng -->
+
+    <div class="card mb-4">
+
+        <div class="card-body">
+
+            <h5 class="card-title">
+                Thông tin đơn hàng
+            </h5>
+
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <strong>Mã đơn hàng</strong>
+
+                    <p>
+                        {{ order.maDonHang }}
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <strong>Ngày đặt</strong>
+
+                    <p>
+                        {{ order.ngayDat.strftime('%d/%m/%Y %H:%M') }}
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <strong>Trạng thái</strong>
+
+                    {% if order.trangThai == "ChoXacNhan" %}
+
+                        <p class="text-warning">
+                            Chờ xác nhận
+                        </p>
+
+                    {% elif order.trangThai == "DaXacNhan" %}
+
+                        <p class="text-primary">
+                            Đã xác nhận
+                        </p>
+
+                    {% elif order.trangThai == "DangGiao" %}
+
+                        <p class="text-info">
+                            Đang giao
+                        </p>
+
+                    {% elif order.trangThai == "DaGiao" %}
+
+                        <p class="text-success">
+                            Đã giao
+                        </p>
+
+                    {% elif order.trangThai == "HoanThanh" %}
+
+                        <p class="text-success">
+                            Đã mua tại cửa hàng
+                        </p>
+
+                    {% elif order.trangThai == "DaHuy" %}
+
+                        <p class="text-danger">
+                            Đã hủy
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <strong>Địa chỉ giao hàng</strong>
+
+                    <p>
+                        {{ order.diaChiGiao }}
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <strong>Phương thức thanh toán</strong>
+
+                    <p>
+                        {% if order.phuongThucThanhToan == "ThanhToanTaiCuaHang" %}
+                            Thanh toán tại cửa hàng
+                        {% elif order.phuongThucThanhToan == "ShipCOD" %}
+                            Thanh toán khi nhận hàng
+                        {% elif order.phuongThucThanhToan == "ChuyenKhoan" %}
+                            Chuyển khoản ngân hàng
+                        {% else %}
+                            {{ order.phuongThucThanhToan }}
+                        {% endif %}
+                    </p>
+
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Trạng thái thanh toán</strong>
+
+                        <p>
+                            {% if order.trangThaiThanhToan == "DaThanhToan" %}
+                                Đã thanh toán
+                            {% elif order.trangThaiThanhToan == "ChuaThanhToan" %}
+                                Chưa thanh toán
+                            {% else %}
+                                {{ order.trangThaiThanhToan }}
+                            {% endif %}
+                        </p>
+
+                </div>
+
+            </div>
+
+
+            {% if order.ghiChu %}
+
+            <div>
+
+                <strong>Ghi chú</strong>
+
+                <p>
+                    {{ order.ghiChu }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Danh sách sản phẩm -->
+
+    <div class="card mb-4">
+
+        <div class="card-body">
+
+            <h5 class="card-title">
+                Sản phẩm
+            </h5>
+
+            <hr>
+
+
+            {% for item in order.chiTietDonHangs %}
+
+            <div class="row align-items-center mb-3">
+
+                <!-- Hình ảnh -->
+
+                <div class="col-md-2 text-center">
+
+                    <a href="{{ url_for(
+                        'product_detail',
+                        product_name=item.sanPham.tenSanPham
+                    ) }}">
+
+                        {% if item.sanPham.hinhAnh %}
+
+                            {% if item.sanPham.hinhAnh.startswith('http://')
+                                  or item.sanPham.hinhAnh.startswith('https://') %}
+
+                                <img
+                                    src="{{ item.sanPham.hinhAnh }}"
+                                    alt="{{ item.sanPham.tenSanPham }}"
+                                    style="width: 40px; height: 40px; object-fit: cover; border-radius: 8px;"
+                                >
+
+                            {% else %}
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename='pictures/products/' ~ item.sanPham.hinhAnh
+                                    ) }}"
+                                    alt="{{ item.sanPham.tenSanPham }}"
+                                    style="width: 40px; height: 40px; object-fit: cover; border-radius: 8px;"
+                                >
+
+                            {% endif %}
+
+                        {% endif %}
+
+                    </a>
+
+                </div>
+
+
+                <!-- Tên sản phẩm -->
+
+                <div class="col-md-4">
+
+                    <a href="{{ url_for(
+                        'product_detail',
+                        product_name=item.sanPham.tenSanPham
+                    ) }}"
+                       class="product-name"
+                    >
+                        {{ item.sanPham.tenSanPham }}
+                    </a>
+
+                </div>
+
+
+                <!-- Đơn giá -->
+
+                <div class="col-md-2">
+
+                    <span>
+                        {{ "{:,.0f}".format(item.donGia) }} đ
+                    </span>
+
+                </div>
+
+
+                <!-- Số lượng -->
+
+                <div class="col-md-2">
+
+                    <span>
+                        x {{ item.soLuong }}
+                    </span>
+
+                </div>
+
+
+                <!-- Thành tiền -->
+
+                <div class="col-md-2 text-end">
+
+                    <strong>
+                        {{ "{:,.0f}".format(item.thanhTien) }} đ
+                    </strong>
+
+                </div>
+
+            </div>
+
+            {% if not loop.last %}
+
+                <hr>
+
+            {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <div class="card mb-5">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between">
+
+                <strong>
+                    Tổng tiền
+                </strong>
+
+                <strong class="text-danger fs-5">
+
+                    {{ "{:,.0f}".format(order.tongTien) }} đ
+
+                </strong>
+
+            </div>
+
+
+            <div class="d-flex justify-content-end mt-4">
+
+                {% if order.trangThai in [
+                    "ChoXacNhan",
+                    "DaXacNhan"
+                ] %}
+
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    onclick="cancelOrder('{{ order.maDonHang }}')"
+                >
+                    Hủy đơn
+                </button>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{{ super() }}
+
+<script
+    src="{{ url_for('static', filename='js/order.js') }}"
+></script>
+
+{% endblock %}
