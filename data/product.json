@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "name": "Sữa Dutch Lady Socola",
+        "price": 355000,
+        "category_id": 1,
+        "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2386/80464/bhx/sua-tt-cghl-socola-180mlloc_202504211506505688.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Sữa TH True Milk",
+        "price": 270000,
+        "category_id": 1,
+        "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2386/80491/bhx/80491-thumb-moi_202410291604337509.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Sữa Vinamilk",
+        "price": 353000,
+        "category_id": 1,
+        "image": "https://bizweb.dktcdn.net/thumb/large/100/469/765/products/z4923431239163-3101190fe8814dab7db0841977a6e3ef.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Sữa Nuti",
+        "price": 390000,
+        "category_id": 1,
+        "image": "https://product.hstatic.net/200000984105/product/loc-4-hop-sua-tuoi-nutimilk-it-duong-tu-1-tuoi-1-loc-4-hop-110ml__2__bd2b0cadadbe41a4bb8cc62c1d98df34_grande.jpg"
+    },
+  {
+        "id": 5,
+        "name": "Mì Hảo Hảo Tôm Chua Cay",
+        "price": 120000,
+        "category_id": 2,
+        "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2565/85959/bhx/85959_202410151353322317.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Mì Ly Mordern",
+        "price": 150000,
+        "category_id": 2,
+        "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2565/86054/bhx/mi-ly-modern-lau-thai-tom-65g-thung-24-ly_202511211145421342.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Kem Bắp",
+        "price": 12000,
+        "category_id": 3,
+        "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/7462/327377/bhx/kem-bap-ngot-joyday-cay-80ml_202508201543560119.jpg"
+    },
+    {
+        "id": 8,
+        "name": "Kem Socola",
+        "price": 25000,
+        "category_id": 3,
+        "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/7462/327376/bhx/kem-mach-nha-socola-gion-joyday-cay-65ml_202508201533134339.jpg"
+    },
+    {
+        "id": 9,
+        "name": "Bột giặt Lix",
+        "price": 185000,
+        "category_id": 4,
+        "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2463/310730/bhx/bot-giat-lix-sach-thom-24h-ngat-huong_202507171326032095.jpg"
+    },
+    {
+        "id": 10,
+        "name": "Bột giặt Surf Khử Mùi",
+        "price": 210000,
+        "category_id": 4,
+        "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2463/223228/bhx/surf-huong-nuoc-hoa-duyen-dang-55kg_202507171333229907.jpg"
+    }
+]

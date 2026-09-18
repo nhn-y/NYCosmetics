@@ -1,0 +1,81 @@
+/* ========================================================================= */
+/* --- TRANG ĐĂNG KÝ--- */
+/* ========================================================================= */
+
+/* Định vị form ở giữa màn hình */
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Thẻ bao quanh form (Card) */
+.login-card {
+    background-color: #ffffff;
+    border-radius: 3rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    padding: 3rem 2rem;
+    width: 380px;
+
+}
+
+/* Tiêu đề và Icon */
+.card-header h2 {
+    font-weight: bold;
+    color: #7b1fa2; /* Tím đậm */
+    font-size:34px;
+
+}
+.card-header {
+    background-color: #ffffff  ;
+    border-bottom: #ffffff;
+}
+
+
+/* --- Cấu hình Input Fields --- */
+
+/* Icon và phần tử form (văn bản) */
+.custom-input-group-text {
+    background-color: #f3e5f5; /* Màu nền nhạt cho icon */
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem 0 0 0.5rem;
+
+}
+
+/* Input/Select field */
+.custom-input-style {
+    border: 1px solid #ced4da;
+    /* Dành cho input nằm trong input-group */
+    border-radius: 0 0.5rem 0.5rem 0;
+}
+
+/* Xử lý riêng cho thẻ select */
+.form-select.custom-input-style {
+    border-radius: 0.5rem;
+    border-left: 1px solid #ced4da;
+}
+
+/* Hiệu ứng focus */
+.custom-input-style:focus, .form-select.custom-input-style:focus {
+    box-shadow: 0 0 0 0.25rem rgba(103, 58, 183, 0.25);
+    border-color: #673ab7;
+}
+
+/* --- Nút Đăng ký --- */
+.btn-custom {
+    background-color: #673ab7;
+    border-color: #673ab7;
+    font-weight: bold;
+    padding: 0.6rem 1rem;
+    border-radius: 0.75rem; /* Bo góc nút */
+    transition: background-color 0.3s ease;
+    color: #fff;
+
+}
+.btn-custom:hover {
+    background-color: #512da8;
+    color: #fff;
+}

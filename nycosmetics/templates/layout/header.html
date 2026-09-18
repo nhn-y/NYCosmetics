@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-sm navbar-dark " style="background-color:#C28BEF;">
+    <div class="container-fluid">
+        {% if current_user.is_authenticated %}
+        {% if current_user.user_role|int == 1 %}
+        <a class="navbar-brand fw-bold text-primary" href="/admin">
+            <i class="fa-solid fa-user-shield me-2"></i> DISCOUNT MANAGER
+        </a>
+        {% else %}
+        <a class="navbar-brand fw-bold" href="/">
+            <i class="fa-solid fa-shop me-2"></i> BÁCH HÓA SHOP
+        </a>
+        {% endif %}
+        {% else %}
+        <a class="navbar-brand fw-bold" href="/">BÁCH HÓA SHOP</a>
+        {% endif %}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav me-auto">
+            </ul>
+
+            {% if current_user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link active" href="" style="padding: 0px 5px; font-size: 0.85rem;">
+                    Chào {{current_user.name}}
+                </a>
+
+            <li class="nav-item">
+                <a class="nav-link active" href="/logout" style="padding: 0px 5px; font-size: 0.85rem;">&#128220; Đăng
+                    xuất</a>
+            </li>
+            </li>
+
+
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link active" href="/login" style="padding: 0px 5px; font-size: 0.85rem;">&#128220;Đăng
+                    nhập</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link active" href="/register" style="padding: 0px 5px; font-size: 0.85rem;">&#128105;Đăng
+                    ký</a>
+            </li>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
